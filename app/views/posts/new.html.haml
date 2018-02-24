@@ -1,0 +1,4 @@
+= simple_form_for @post do |f|
+  = f.input :image, error: 'You need an image to post here!'
+  = f.input :caption
+  = f.button :submit
