@@ -6,11 +6,12 @@ feature 'Edit post' do
   end
 
   scenario 'Update caption' do
-    post = create(:post)
+    register
+    new_post("This is post one")
     visit '/'
     find(:xpath, "//a[contains(@href,'posts/1')]").click
     click_link 'Edit Post'
-    expect(page.current_path).to eq(edit_post_path(post))
+    expect(page.current_path).to eq(edit_post_path(1))
     fill_in 'Caption', with: 'Best ever coffee'
     click_button 'Update Post'
     expect(page).to have_content 'Best ever coffee'
@@ -18,7 +19,8 @@ feature 'Edit post' do
   end
 
   scenario 'Can\'t update post without an image' do
-    post = create(:post)
+    register
+    new_post("This is post one")
     visit '/'
     find(:xpath, "//a[contains(@href,'posts/1')]").click
     click_link 'Edit Post'

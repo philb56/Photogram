@@ -3,6 +3,7 @@ require 'rails_helper.rb'
 feature 'Creating posts' do
   scenario 'can create a post' do
     visit '/'
+    register
     click_link 'New Post'
     attach_file('Image', "spec/files/images/coffee.jpg")
     fill_in 'Caption', with: 'nom nom nom #coffeetime'
@@ -13,6 +14,7 @@ feature 'Creating posts' do
 
   it 'needs an image to create a post' do
     visit '/'
+    register
     click_link 'New Post'
     fill_in 'Caption', with: 'nom nom nom #coffeetime'
     click_button 'Create Post'

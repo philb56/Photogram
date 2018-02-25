@@ -2,8 +2,10 @@ require 'rails_helper.rb'
 
 feature 'multiple posts' do
   scenario 'the index displays correct created post information' do
-    post_one = create(:post, caption: "This is post one")
-    post_two = create(:post, caption: "This is the second post")
+    visit '/'
+    register
+    new_post("This is post one")
+    new_post("This is the second post")
     visit '/'
     expect(page).to have_content("This is post one")
     expect(page).to have_content("This is the second post")
