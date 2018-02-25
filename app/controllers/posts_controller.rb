@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-
   def index
     @posts = Post.all
   end
@@ -38,10 +37,24 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    flash[:success] = "Your post has been deleted."
+    redirect_to(posts_path)
+    # if @post.destroy
+    #   flash[:success] = "Your post has been deleted."
+    #   redirect_to posts_path
+    # else
+    #   flash[:alert] = "Something is wrong with your delete"
+    #   render :edit
+    # end
+  end
+
 private
 
-def post_params
-  params.require(:post).permit(:caption, :image)
-end
+  def post_params
+    params.require(:post).permit(:caption, :image)
+  end
 
 end
