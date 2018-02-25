@@ -4,8 +4,16 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+
   def new
     @post = Post.new
+  end
+
+  def edit
+    @post = Post.find(params[:id])
   end
 
   def create
@@ -19,8 +27,13 @@ class PostsController < ApplicationController
     end
   end
 
-  def show
+  def update
+    p "update"
     @post = Post.find(params[:id])
+    @post.update(post_params)
+    flash[:success] = "Your post has been updated."
+    redirect_to(post_path(@post))
+    p "/update"
   end
 
 private
