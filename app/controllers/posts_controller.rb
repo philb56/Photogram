@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
+  before_action :owned_post, only: [:edit, :update, :destroy]
+
   def index
     @posts = Post.all
   end
@@ -44,19 +46,20 @@ class PostsController < ApplicationController
     @post.destroy
     flash[:success] = "Your post has been deleted."
     redirect_to(posts_path)
-    # if @post.destroy
-    #   flash[:success] = "Your post has been deleted."
-    #   redirect_to posts_path
-    # else
-    #   flash[:alert] = "Something is wrong with your delete"
-    #   render :edit
-    # end
   end
 
 private
 
   def post_params
     params.require(:post).permit(:caption, :image)
+  end
+
+  def owned_post
+    post = Post.find(params[:id])
+    unless current_user == post.user
+      flash[:alert] = "That post doesn't belong to you!"
+      redirect_to root_path
+    end
   end
 
 end
